@@ -143,7 +143,7 @@ export class Header extends Component {
             <StyledLink to="/collections">Shop</StyledLink>
             <StyledLink to="/">Features</StyledLink>
             <StyledLink to="/">Blog</StyledLink>
-            <StyledLink to="/">About</StyledLink>
+            <StyledLink to="/about">About</StyledLink>
             <StyledLink to="/">Contact</StyledLink>
           </Center>
           <Right>

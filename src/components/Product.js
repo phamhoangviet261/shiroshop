@@ -26,7 +26,7 @@ const Container = styled.div`
 const ProducAddtocart = styled.div`
     /* display: none; */
     /* position: absolute; */
-    width: 100%;
+    width: 80%;
     height: 40px;
     background-color: #fff;
     text-align: center;
@@ -263,6 +263,18 @@ export const Product = (props) => {
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
+  useEffect(() => {
+    let header = document.getElementById('header')
+    document.onscroll = () => {
+      const y = window.scrollY;
+      if (y > 100) {
+        header.classList.add('changeHeaderColor');
+      }
+      else {
+        header.classList.remove('changeHeaderColor');
+      }
+    }
+  }, []);
   // eslint-disable-next-line no-useless-constructor
   const [showFilter, setShowFIlter] = useState(false);
   const [_products, setProducts] = useState([])
@@ -414,16 +426,19 @@ export const Product = (props) => {
           <Container>
             {
               _products.map((item, index) => (
+                <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
                 <StyledLink to={"/product/"+ item.id + "-" + item.name.split(" ").join("-").toLowerCase() }>
                 <ProductItem key={index}>
                   <ProductImage src={item.images[0]} alt="TEE" />
                   <ProductTitle>{item.name}</ProductTitle>
                   <ProductPrice>${item.price}</ProductPrice>
-                  <ProducAddtocart onClick={() => props.AddCart(item)}>
-                    Add To Cart
-                  </ProducAddtocart>
+                  
                 </ProductItem>
                 </StyledLink>
+                <ProducAddtocart onClick={() => props.AddCart(item)}>
+                    Add To Cart
+                  </ProducAddtocart>
+                  </div>
               ))
             }
 

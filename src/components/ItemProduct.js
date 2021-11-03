@@ -231,9 +231,7 @@ const RelatedProductPrice = styled.div`
 
 
 export const ItemProduct = (props) => {
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+
   useEffect(() => {
     let header = document.getElementById('header')
     document.onscroll = () => {
@@ -257,11 +255,12 @@ export const ItemProduct = (props) => {
   const [listSize, setlistSize] = useState([])
   const [size, setsize] = useState("")
   const [quantity, setquantity] = useState(0)
-  let API_URL = 'https://6146e2b165467e0017384983.mockapi.io';
+  
   useEffect(() => {
     // props.actFetchProductsRequest();  
     let endpoint = '/product'
     let method = 'GET'
+    let API_URL = 'https://6146e2b165467e0017384983.mockapi.io';
     let d = axios({
       method,
       url: `${API_URL}/${endpoint}/${location.pathname.split(" ").join("-").toLowerCase().split("-")[0].split("/")[2]}`,
@@ -275,13 +274,15 @@ export const ItemProduct = (props) => {
       setlistColor(res.data.color)
       setlistSize(res.data.sizes)
     });
-  }, [])
+    window.scrollTo(0, 0)
+  }, [location])
 
   const [allProduct, setallProduct] = useState([])
   useEffect(() => {
     // props.actFetchProductsRequest();  
     let endpoint = '/product'
     let method = 'GET'
+    let API_URL = 'https://6146e2b165467e0017384983.mockapi.io';
     let d = axios({
       method,
       url: `${API_URL}/${endpoint}`,

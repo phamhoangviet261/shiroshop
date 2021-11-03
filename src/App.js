@@ -13,6 +13,7 @@ import Product from './components/Product';
 import Homepage from './pages/Homepage'
 import Footer from './components/Footter';
 import ItemProduct from './components/ItemProduct';
+import About from './components/About';
 import './App.css'
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
                <Route path="/collections" exact component={Product} />
                <Route path="/carts" exact component={Cart} />
                <Route path="/product/:id" exact component={ItemProduct} />
+               <Route path="/about" exact component={About} />
                <Route path="*">
             <NoMatch />
           </Route>

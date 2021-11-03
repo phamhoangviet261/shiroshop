@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect } from 'react'
 import { connect } from "react-redux";
 import {IncreaseQuantity,DecreaseQuantity,DeleteCart} from './actions';
 import styled from "styled-components";
@@ -134,71 +134,80 @@ function Cart({items,IncreaseQuantity,DecreaseQuantity,DeleteCart}){
     function TotalPrice(price,tonggia){
         return Number(price * tonggia).toLocaleString('en-US');
     }
-     
-     
-    return(    
-    <Container>
-        <CartSide className="row">
-            <div className="col-md-12">
-            <table className="table">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Name</th>
-                        <th>Image</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Total Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {
-                    ListCart.map((item,key)=>{
-                        return(
-                            <tr key={key}>   
-                            <td><HighlightOffIcon onClick={()=>DeleteCart(key)} style={{cursor: "pointer"}}></HighlightOffIcon></td>
-                            {/* <td><i className="badge badge-danger" onClick={()=>DeleteCart(key)}>X</i></td> */}
-                            <td><h5>{item.name}</h5></td>
-                            <td><img src={item.image} style={{width:'100px',height:'auto'}} alt=""/></td>
-                            <td>{item.price} $</td>
-                            <td>
-                                    <ButtonInCart style={{margin:'2px'}} onClick={()=>DecreaseQuantity(key)}>-</ButtonInCart>
-                                    <ButtonInCart>{item.quantity}</ButtonInCart>
-                                    <ButtonInCart style={{margin:'2px'}} onClick={()=>IncreaseQuantity(key)}>+</ButtonInCart>
-                            </td>
-                            <td>{ TotalPrice(item.price,item.quantity)} $</td>
+    
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [ListCart])
+    if(ListCart.length !== 0)
+        return(    
+        <Container>
+            <CartSide className="row">
+                <div className="col-md-12">
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Name</th>
+                            <th>Image</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total Price</th>
                         </tr>
-                        )
-                    })
-                         
-                }
-                <tr>
-                    <td colSpan="5">Total Carts</td>
-                    <td style={{fontWeight: "bold"}}>{Number(TotalCart).toLocaleString('en-US')} $</td>
-                </tr>
-                </tbody>
-               
-            </table>
-            </div>
-        </CartSide>
-        <CheckoutSide>
-            <CheckoutTitle>CART TOTALS</CheckoutTitle>
-            <Subtotal>
-                <span style={{fontWeight: "bold"}}>Subtotal:</span>
-                <span>{Number(TotalCart).toLocaleString('en-US')} $</span>
-            </Subtotal>
-            <Shipping>
-                <span style={{fontWeight: "bold"}}>Shipping:</span>
-                <span>There are no shipping methods available. Please double check your address, or contact us if you need any help.<ButtonTotal>update totals</ButtonTotal></span>
-            </Shipping>
-            
-            <Total>
-                <span style={{fontWeight: "bold"}}>Total:</span>
-                <span>{Number(TotalCart).toLocaleString('en-US')} $</span>
-            </Total>
-            <ButtonCheckout>checkout</ButtonCheckout>
-        </CheckoutSide>
-    </Container>
+                    </thead>
+                    <tbody>
+                    {
+                        ListCart.map((item,key)=>{
+                            return(
+                                <tr key={key}>   
+                                <td><HighlightOffIcon onClick={()=>DeleteCart(key)} style={{cursor: "pointer"}}></HighlightOffIcon></td>
+                                {/* <td><i className="badge badge-danger" onClick={()=>DeleteCart(key)}>X</i></td> */}
+                                <td><h5>{item.name}</h5></td>
+                                <td><img src={item.image} style={{width:'100px',height:'auto'}} alt=""/></td>
+                                <td>{item.price} $</td>
+                                <td>
+                                        <ButtonInCart style={{margin:'2px'}} onClick={()=>DecreaseQuantity(key)}>-</ButtonInCart>
+                                        <ButtonInCart>{item.quantity}</ButtonInCart>
+                                        <ButtonInCart style={{margin:'2px'}} onClick={()=>IncreaseQuantity(key)}>+</ButtonInCart>
+                                </td>
+                                <td>{ TotalPrice(item.price,item.quantity)} $</td>
+                            </tr>
+                            )
+                        })
+                            
+                    }
+                    <tr>
+                        <td colSpan="5">Total Carts</td>
+                        <td style={{fontWeight: "bold"}}>{Number(TotalCart).toLocaleString('en-US')} $</td>
+                    </tr>
+                    </tbody>
+                
+                </table>
+                </div>
+            </CartSide>
+            <CheckoutSide>
+                <CheckoutTitle>CART TOTALS</CheckoutTitle>
+                <Subtotal>
+                    <span style={{fontWeight: "bold"}}>Subtotal:</span>
+                    <span>{Number(TotalCart).toLocaleString('en-US')} $</span>
+                </Subtotal>
+                <Shipping>
+                    <span style={{fontWeight: "bold"}}>Shipping:</span>
+                    <span>There are no shipping methods available. Please double check your address, or contact us if you need any help.<ButtonTotal>update totals</ButtonTotal></span>
+                </Shipping>
+                
+                <Total>
+                    <span style={{fontWeight: "bold"}}>Total:</span>
+                    <span>{Number(TotalCart).toLocaleString('en-US')} $</span>
+                </Total>
+                <ButtonCheckout>checkout</ButtonCheckout>
+            </CheckoutSide>
+        </Container>
+        )
+    else 
+    return (
+        <div style={{width: "100%", height: "490px", display: "flex", justifyContent: "center", alignItems: "center"}}>
+            <i>Cart is empty</i>
+        </div>
     )
 }
 const mapStateToProps = state =>{
